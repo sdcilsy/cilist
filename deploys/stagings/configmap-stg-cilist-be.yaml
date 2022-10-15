@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-stg-cilist-be
+  namespace: staging
+  labels:
+    app: stg-cilist-be
+data:
+  .env: |
+    BASE_URL_PORT=5000
+ 
+   

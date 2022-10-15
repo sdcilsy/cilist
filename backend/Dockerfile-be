@@ -1,0 +1,13 @@
+From node:16-alpine
+
+WORKDIR /app
+
+COPY backend/package*.json ./
+
+COPY backend/ .
+
+RUN npm install
+
+EXPOSE 5000
+
+CMD ["npm", "start"]

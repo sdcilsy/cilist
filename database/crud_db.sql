@@ -41,10 +41,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `gender`, `createdAt`, `updatedAt`) VALUES
-(1, 'John Doe', 'john@gmail.com', 'Male', '2022-03-29 03:23:37', '2022-03-29 03:23:37'),
-(2, 'Mark Lee', 'mlee@gmail.com', 'Male', '2022-04-05 15:46:30', '2022-04-05 15:46:30'),
-(3, 'Sofia', 'sofia@gmail.com', 'Female', '2022-04-05 15:46:46', '2022-04-05 15:46:46'),
-(4, 'Michelle', 'mangela@gmail.com', 'Female', '2022-06-03 02:01:55', '2022-06-03 02:07:06');
+(2, 'John Doe', 'john@gmail.com', 'Male', '2022-03-29 03:23:37', '2022-03-29 03:23:37'),
+(3, 'Mark Lee', 'mlee@gmail.com', 'Male', '2022-04-05 15:46:30', '2022-04-05 15:46:30'),
+(4, 'Sofia', 'sofia@gmail.com', 'Female', '2022-04-05 15:46:46', '2022-04-05 15:46:46'),
+(5, 'Michelle', 'mangela@gmail.com', 'Female', '2022-06-03 02:01:55', '2022-06-03 02:07:06');
 
 --
 -- Indexes for dumped tables

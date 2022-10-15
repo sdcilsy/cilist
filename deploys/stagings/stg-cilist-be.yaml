@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stg-cilist-be
+  namespace: staging
+spec:
+  selector:
+    app: stg-cilist-be
+  ports:
+  - port: 5000
+    targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stg-cilist-be
+  namespace: staging
+spec:
+  selector:
+    matchLabels:
+      app: stg-cilist-be
+  template:
+    metadata:
+      labels:
+        app: stg-cilist-be
+    spec:
+      containers:
+      - name: stg-cilist-be
+        image: fataraz/cilist-be:stg-imagetag
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 5000
+        env:
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: secret-stg-cilist-be
+                key: DATABASE_USERNAME
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secret-stg-cilist-be
+                key: DATABASE_PASSWORD
+          - name: DATABASE_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: secret-stg-cilist-be
+                key: DATABASE_DATABASE
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: secret-stg-cilist-be
+                key: DATABASE_HOST
+          - name: DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: secret-stg-cilist-be
+                key: DATABASE_PORT
+        volumeMounts:
+          - mountPath: /app/.env
+            name: cm-stg-cilist-be
+            subPath: .env
+      volumes:
+        - name: cm-stg-cilist-be
+          configMap:
+            name: configmap-stg-cilist-be

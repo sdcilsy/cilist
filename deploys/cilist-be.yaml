@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cilist-be
+  namespace: production
+spec:
+  selector:
+    app: cilist-be
+  ports:
+  - port: 5000
+    targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cilist-be
+  namespace: production
+spec:
+  selector:
+    matchLabels:
+      app: cilist-be
+  template:
+    metadata:
+      labels:
+        app: cilist-be
+    spec:
+      containers:
+      - name: cilist-be
+        image: fataraz/cilist-be:imagetag
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 5000
+        env:
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: secret-cilist-be
+                key: DATABASE_USERNAME
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secret-cilist-be
+                key: DATABASE_PASSWORD
+          - name: DATABASE_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: secret-cilist-be
+                key: DATABASE_DATABASE
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: secret-cilist-be
+                key: DATABASE_HOST
+          - name: DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: secret-cilist-be
+                key: DATABASE_PORT
+        volumeMounts:
+          - mountPath: /app/.env
+            name: cm-cilist-be
+            subPath: .env
+      volumes:
+        - name: cm-cilist-be
+          configMap:
+            name: configmap-cilist-be
