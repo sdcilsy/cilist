@@ -1,0 +1,9 @@
+---
+- name: Deployment
+  hosts: bry
+  become: true
+  vars: 
+  roles: 
+  - Install Python
+  - Install Docker
+  - Kompose

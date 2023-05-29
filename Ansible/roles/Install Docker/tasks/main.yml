@@ -1,0 +1,57 @@
+---
+- name: Install Package 
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl 
+      - gnupg 
+    state: latest
+        # OTOMATIS DOWNLOAD KE VERSI TERTINGGI
+
+- name: Add Apt Key 
+  apt_key:
+  # DOWNLOAD KEY BUAT APT
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+  # UNTUK NAMBAH REPOSITORY KE APT
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    
+- name: Install Docker 
+  apt:
+    pkg: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io 
+      - docker-buildx-plugin 
+      - docker-compose-plugin
+    state: latest
+
+- name: Apt Install pip
+  apt:
+    name: python3-pip
+
+- name: pip Install Docker
+  pip:
+    name: docker
+  notify:
+    - Start Docker
+
+- name: pip Install Docker Compose
+  pip:
+    name: docker-compose
+
+- name: Create Web Directory
+  file: path=auto/ mode=775 state=directory
+
+- name: Copy file Backend
+  template: src={{ back }} dest=auto/{{ back }}
+
+- name: Copy file Frontend
+  template: src={{ front }} dest=auto/{{ front }}
+
+

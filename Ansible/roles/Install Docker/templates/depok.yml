@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  back:
+    image: ikanpaus/backend:v1
+    ports:
+      - 5500:5000
+    environment:
+      DATABASE_USERNAME: "people"
+      DATABASE_PASSWORD: "people402"
+      DATABASE_DATABASE: "people" 
+      DATABASE_HOST: "RDS ENDPOINT"
+      DATABASE_PORT: 3306
+      BASE_URL_PORT: 5000
+
+
